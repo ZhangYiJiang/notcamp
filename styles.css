@@ -1,0 +1,586 @@
+/*
+ * Custom properties -
+ * Powerful variables that can be used to customize component
+ * variants, theming and more
+ */
+
+:root {
+  --genre-color: #42a0bd;
+  --container-width: calc(100% - 20px);
+}
+
+.genre-color.electronic  { --genre-color: #31c723 }
+.genre-color.rock        { --genre-color: #d52026 }
+.genre-color.metal       { --genre-color: #990000 }
+.genre-color.alternative { --genre-color: #e6571a }
+.genre-color.hip-hop-rap { --genre-color: #3664a1 }
+
+/*
+ * Global styles 
+ */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #eee;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+  outline: 0;
+}
+
+.container {
+  max-width: 1020px; /* Fallback value for browsers that do not 
+                        support custom properties */
+  max-width: var(--container-width);
+  margin: 0 auto; /* margin: auto centers elements */
+}
+
+/* Use media breakpoints to create layouts
+   that work on all screen sizes. These are declared
+   from smallest to largest because later rules override
+   earlier ones of the same specificity */
+@media (min-width: 400px) {
+  :root { --container-width: 360px }
+}
+
+@media (min-width: 700px) {
+  :root { --container-width: 660px }
+}
+
+@media (min-width: 1060px) {
+  :root { --container-width: 1020px }
+}
+
+@media (min-width: 1320px) {
+  :root { --container-width: 1280px }
+}
+
+.sr-only {
+  /* Utility style to hide content from non-screenreader users */
+  position: absolute;
+  right: 9999px;
+  top: -9999px;
+}
+
+/* 
+ * Shared components 
+ */
+.btn {
+  border: 1px solid;
+  background: none;
+  padding: 10px 12px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn:hover,
+.btn:focus {
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.btn-group {
+  text-align: center;
+}
+
+.btn-group .btn:last-child {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.btn-group .btn:not(:last-child) {
+  border-right: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.btn-group .btn:not(:last-child):not(:first-child) {
+  border-radius: 0;
+}
+
+/* Global header */
+.global-header {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.global-header .global-logo {
+  font-size: 20px;
+  font-weight: normal;
+  padding: 10px 0;
+  margin-bottom: 12px;
+}
+
+.global-header .global-logo a {
+  color: #000;
+  text-transform: lowercase;
+}
+
+.global-header .global-tagline em {
+  font-weight: bold;
+  font-style: normal;
+  display: inline-block;
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  /**
+   * @supports media query allows groups of styles to only be 
+   * enabled if some CSS property / value is supported.
+   */
+  .global-header .global-tagline em {
+    /* This background image and color would make the text 
+       invisible if the browser does not support background-clip: text */
+    background-image: linear-gradient(to right, #5F47FD, #209EC4);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
+
+.global-header .container {
+  /* Use flexbox for layout in one dimension
+     Remember that flexbox can be nested */
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 699px) {
+  .global-header .container { flex-direction: column; }
+}
+
+.global-search {
+  position: relative;
+}
+
+.global-search .global-search-autocomplete {
+  display: none;
+  /* Use position absolute to remove elements
+     from the normal layout flow, such as for this
+     dropdown menu */
+  position: absolute;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  left: 0; /* In absolute positioned elements these refer
+              to offset from the sides of the nearest relative
+              positioned parent (which is .global-search) */
+  right: 0;
+  z-index: 2;
+}
+
+.global-search input {
+  padding: 14px 12px;
+  border-radius: 3px;
+  border: 0;
+  background: #ddd;
+  width: 300px;
+  font-size: 14px;
+}
+
+.global-search input:focus + .global-search-autocomplete {
+  display: block;
+}
+
+.global-search .global-search-autocomplete a {
+  display: block;
+  background-color: var(--genre-color);
+  color: #fff;
+  padding: 16px;
+  font-size: 14px;
+  text-transform: lowercase;
+}
+
+.header-account {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.header-account a {
+  display: inline-block;
+  color: #333;
+  font-weight: bold;
+  margin-left: 12px;
+  text-transform: lowercase;
+}
+
+/* Blog posts */
+.blog-posts {
+  /* Use grid for two dimension layout.
+     This layout is technically possible using
+     flexbox, but grid-gap is hard to emulate 
+     with just margin */
+  display: grid;
+  grid-template-columns: auto 300px;
+  grid-gap: 2px;
+}
+
+.blog-posts .main-post {
+  grid-row: 1 / 4;
+}
+
+.blog-posts .side-post {
+  grid-column: 2;
+  height: 160px;
+}
+
+.blog-posts a {
+  color: #fff;
+  position: relative;
+  display: flex;
+}
+
+.blog-posts .content {
+  flex: 1 0;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+  /* text-shadow is often used to improve contrast when
+     laying text over images */
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+}
+
+.blog-posts .main-post .content {
+  /* calc() allows us to do math with mixed units. 
+     vw refers to the width of the viewport (browser window).
+     This lets us align the content of this element with 
+     .container while its parent stretches to the edge of 
+     the page */
+  margin-left: calc((100vw - var(--container-width)) / 2);
+}
+
+@media (max-width: 699px) {
+  /* Switch to single column on small screens */
+  .blog-posts {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-posts .main-post .content {
+    margin-left: 0;
+    height: 240px;
+  }
+}
+
+.blog-posts .overlay,
+.blog-posts .overlay::after {
+  /* Another example of absolute position, used to
+     put one element behind another */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.blog-posts .overlay {
+  overflow: hidden;
+}
+
+.blog-posts .overlay img {
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.blog-posts .overlay::after {
+  /* ::after allows us to generate elements that
+     are not in the DOM for decorative purposes */
+  content: '';
+  /* Transitions cannot be applied to gradients
+     but we can fade this element out */
+  transition: opacity 0.3s;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.25)
+  );
+}
+
+.blog-posts a:hover .overlay::after,
+.blog-posts a:focus .overlay::after {
+  opacity: 0;
+}
+
+.blog-posts .main-post h2 {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.blog-posts .main-post p {
+  margin-bottom: 20px;
+}
+
+.blog-posts .side-post h2 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.blog-posts .side-post p {
+  margin: 0;
+}
+
+.blog-posts .blog-subtitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/*
+ * Selling right now
+ */
+.home-stats {
+  text-align: center;
+  font-size: 22px;
+  margin: 60px 0;
+}
+
+.selling-right-now h2 {
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.selling-right-now .sold-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  max-width: var(--container-width);
+  overflow: auto;
+}
+
+.selling-right-now .sold-list li {
+  display: flex;
+  flex-direction: column;
+  margin-right: 12px;
+}
+
+.selling-right-now .sold-list a {
+  color: #333;
+}
+
+.selling-right-now .sold-list img {
+  display: block;
+  max-width: 120px;
+  margin-bottom: 8px;
+}
+
+.selling-right-now .sold-list h3,
+.selling-right-now .sold-list p {
+  font-size: 13px;
+  margin: 0 0 3px;
+}
+
+.selling-right-now .sold-list time {
+  color: #999;
+}
+
+/*
+ * Discover
+ */
+.home-discover header {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.home-discover h2 {
+  font-size: 16px;
+  margin-right: 40px;
+}
+
+.home-discover header fieldset {
+  color: #888;
+  text-transform: lowercase;
+  border: 0;
+  padding: 0;
+  position: relative;
+  padding-left: 80px;
+  font-size: 14px;
+}
+
+.home-discover header legend {
+  position: absolute;
+  left: 0;
+}
+
+.home-discover header input {
+  display: none;
+}
+
+.home-discover header label {
+  cursor: pointer;
+}
+
+.home-discover header label span {
+  padding: 8px 20px;
+  border-radius: 30px;
+}
+
+.home-discover header label:hover span,
+.home-discover header label:focus span {
+  text-decoration: underline;
+}
+
+.home-discover header input:checked + span {
+  background: #ccc;
+  color: #333;
+}
+
+.home-discover .discover-filter {
+  margin-bottom: 15px;
+}
+
+.discover-filter-genre {
+  background-color: var(--genre-color);
+}
+
+.discover-filter ul {
+  list-style: none;
+  padding: 12px 0;
+  display: flex;
+  text-transform: lowercase;
+}
+
+.discover-filter a {
+  color: #fff;
+  font-weight: bold;
+  padding: 4px 12px;
+  margin-right: 4px;
+  border-radius: 30px;
+  transition: background 0.3s;
+}
+
+.discover-filter a:hover,
+.discover-filter a:focus {
+  background-color: rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+}
+
+.discover-filter a.selected {
+  background: #333;
+}
+
+.discover-content {
+  display: flex;
+}
+
+.discover-player {
+  width: 280px;
+  order: 2;
+  padding: 5px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+@media (max-width: 699px) {
+  .discover-content { 
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .discover-player {
+    order: 0;
+    margin-left: 0;
+  }
+}
+
+.discover-player .album-art img {
+  display: block;
+  max-width: 100%;
+}
+
+.discover-player .player-controls {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.discover-player .player-controls .play-progress,
+.discover-player .player-controls .play-btn {
+  border: 1px solid #ccc;
+}
+
+.discover-player .player-controls .play-btn {
+  padding: 10px;
+  border-radius: 0;
+}
+
+.discover-player .player-controls .play-progress {
+  flex: 1 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-left: none;
+  font-size: 12px;
+}
+
+.discover-player-actions {
+  display: flex;
+}
+
+.discover-player-actions .btn {
+  flex: 1 0 33%;
+  color: #333;
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
+.discover-album-list {
+  flex: 1 0;
+  align-self: stretch;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* Flexible grid layout - each column is at most 150px wide */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 15px;
+}
+
+.discover-album-list img {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 6px;
+}
+
+.discover-album-list h3,
+.discover-album-list p {
+  font-size: 14px;
+}
+
+.discover-album-list .discover-album-genre {
+  color: #999;
+}
+
+/* Silly CSS hacks */
+.global-logo::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 16px;
+  background-color: #42a0bd;
+  transform: skew(-30deg);
+  margin-right: -2px;
+}
